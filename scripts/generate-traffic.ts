@@ -6,7 +6,7 @@ const BASE_URL = process.env.VERCEL_URL
   : "http://localhost:3000";
 
 function getRandomVisitCount() {
-  return Math.floor(Math.random() * 50) + 2; // 2 to 50
+  return Math.floor(Math.random() * 500) + 75; // 75 to 500
 }
 
 function getRandomUserAgent(): string {
