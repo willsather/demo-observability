@@ -12,7 +12,6 @@ export default async function StatusCodePage({ params }: {
   const { statusCode } = (await params);
   const code = Number.parseInt(statusCode, 10)
 
-  // Validate that the status code is a number
   if (isNaN(code)) {
     notFound()
   }
