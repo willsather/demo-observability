@@ -2,7 +2,7 @@ import { chromium } from "playwright";
 
 const PAGES = ["/", "/speed", "/200"];
 const BASE_URL = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
+  ? process.env.VERCEL_URL
   : "http://localhost:3000";
 
 function getRandomVisitCount() {
