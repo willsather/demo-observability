@@ -1,57 +1,68 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { AlertCircle, CheckCircle, ExternalLink, Loader2 } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import Link from "next/link"
+import { AlertCircle, CheckCircle, ExternalLink, Loader2 } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 interface ApiTesterProps {
-  title: string
-  description: string
-  endpoint: string
+  title: string;
+  description: string;
+  endpoint: string;
 }
 
 export function ApiTester({ title, description, endpoint }: ApiTesterProps) {
-  const [loading, setLoading] = useState(false)
-  const [response, setResponse] = useState<any>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [callCount, setCallCount] = useState(0)
-  const [successCount, setSuccessCount] = useState(0)
-  const [failureCount, setFailureCount] = useState(0)
+  const [loading, setLoading] = useState(false);
+  const [response, setResponse] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const [callCount, setCallCount] = useState(0);
+  const [successCount, setSuccessCount] = useState(0);
+  const [failureCount, setFailureCount] = useState(0);
 
   const callApi = async (forceResult?: "success" | "failure") => {
-    setLoading(true)
-    setError(null)
-    setResponse(null)
+    setLoading(true);
+    setError(null);
+    setResponse(null);
 
-    const url = forceResult ? `${endpoint}?result=${forceResult}` : endpoint
+    const url = forceResult ? `${endpoint}?result=${forceResult}` : endpoint;
 
     try {
-      const res = await fetch(url)
-      setCallCount((prev) => prev + 1)
+      const res = await fetch(url);
+      setCallCount((prev) => prev + 1);
 
       if (!res.ok) {
-        const errorData = await res.json()
-        setError(`${res.status}: ${errorData.message || "Unknown error"}`)
-        setFailureCount((prev) => prev + 1)
+        const errorData = await res.json();
+        setError(`${res.status}: ${errorData.message || "Unknown error"}`);
+        setFailureCount((prev) => prev + 1);
       } else {
-        const data = await res.json()
-        setResponse(data)
-        setSuccessCount((prev) => prev + 1)
+        const data = await res.json();
+        setResponse(data);
+        setSuccessCount((prev) => prev + 1);
       }
     } catch (err) {
-      setError(`Network error: ${err instanceof Error ? err.message : "Unknown error"}`)
-      setFailureCount((prev) => prev + 1)
-      setCallCount((prev) => prev + 1)
+      setError(
+        `Network error: ${err instanceof Error ? err.message : "Unknown error"}`,
+      );
+      setFailureCount((prev) => prev + 1);
+      setCallCount((prev) => prev + 1);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
-  const successRate = callCount > 0 ? Math.round((successCount / callCount) * 100) : 0
-  const failureRate = callCount > 0 ? Math.round((failureCount / callCount) * 100) : 0
+  const successRate =
+    callCount > 0 ? Math.round((successCount / callCount) * 100) : 0;
+  const failureRate =
+    callCount > 0 ? Math.round((failureCount / callCount) * 100) : 0;
 
   return (
     <Card>
@@ -63,7 +74,7 @@ export function ApiTester({ title, description, endpoint }: ApiTesterProps) {
             href={endpoint}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-xs text-primary underline underline-offset-2 hover:text-primary/80"
+            className="inline-flex items-center gap-1 text-primary text-xs underline underline-offset-2 hover:text-primary/80"
           >
             Open API <ExternalLink className="h-3 w-3" />
           </Link>
@@ -72,7 +83,10 @@ export function ApiTester({ title, description, endpoint }: ApiTesterProps) {
       <CardContent className="space-y-4">
         <div className="flex flex-wrap gap-2">
           <Badge variant="outline">Calls: {callCount}</Badge>
-          <Badge variant="default" className="bg-green-100 text-green-800 hover:bg-green-100">
+          <Badge
+            variant="default"
+            className="bg-green-100 text-green-800 hover:bg-green-100"
+          >
             Success: {successCount} ({successRate}%)
           </Badge>
           <Badge variant="destructive">
@@ -81,7 +95,12 @@ export function ApiTester({ title, description, endpoint }: ApiTesterProps) {
         </div>
 
         <div className="flex flex-col gap-2">
-          <Button onClick={() => callApi()} disabled={loading} variant="outline" className="w-full">
+          <Button
+            onClick={() => callApi()}
+            disabled={loading}
+            variant="outline"
+            className="w-full"
+          >
             {loading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -96,11 +115,15 @@ export function ApiTester({ title, description, endpoint }: ApiTesterProps) {
               onClick={() => callApi("success")}
               disabled={loading}
               variant="default"
-              className="bg-green-600 hover:bg-green-700 text-white"
+              className="bg-green-600 text-white hover:bg-green-700"
             >
               Force Success
             </Button>
-            <Button onClick={() => callApi("failure")} disabled={loading} variant="destructive">
+            <Button
+              onClick={() => callApi("failure")}
+              disabled={loading}
+              variant="destructive"
+            >
               Force Failure
             </Button>
           </div>
@@ -110,16 +133,16 @@ export function ApiTester({ title, description, endpoint }: ApiTesterProps) {
         <div className="min-h-[180px]">
           {/* Skeleton loader */}
           {loading && (
-            <div className="p-4 border rounded-md animate-pulse">
+            <div className="animate-pulse rounded-md border p-4">
               <div className="flex items-start">
-                <div className="h-5 w-5 rounded-full bg-gray-200 mr-2"></div>
+                <div className="mr-2 h-5 w-5 rounded-full bg-gray-200" />
                 <div className="w-full">
-                  <div className="h-4 w-24 bg-gray-200 rounded mb-3"></div>
+                  <div className="mb-3 h-4 w-24 rounded bg-gray-200" />
                   <div className="space-y-2">
-                    <div className="h-3 bg-gray-200 rounded w-full"></div>
-                    <div className="h-3 bg-gray-200 rounded w-5/6"></div>
-                    <div className="h-3 bg-gray-200 rounded w-4/6"></div>
-                    <div className="h-3 bg-gray-200 rounded w-3/6"></div>
+                    <div className="h-3 w-full rounded bg-gray-200" />
+                    <div className="h-3 w-5/6 rounded bg-gray-200" />
+                    <div className="h-3 w-4/6 rounded bg-gray-200" />
+                    <div className="h-3 w-3/6 rounded bg-gray-200" />
                   </div>
                 </div>
               </div>
@@ -128,12 +151,12 @@ export function ApiTester({ title, description, endpoint }: ApiTesterProps) {
 
           {/* Error response */}
           {!loading && error && (
-            <div className="p-4 bg-red-50 border border-red-200 rounded-md">
+            <div className="rounded-md border border-red-200 bg-red-50 p-4">
               <div className="flex items-start">
-                <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 mr-2" />
+                <AlertCircle className="mt-0.5 mr-2 h-5 w-5 text-red-500" />
                 <div>
                   <h4 className="font-medium text-red-800">Error</h4>
-                  <p className="text-sm text-red-700 mt-1">{error}</p>
+                  <p className="mt-1 text-red-700 text-sm">{error}</p>
                 </div>
               </div>
             </div>
@@ -141,12 +164,12 @@ export function ApiTester({ title, description, endpoint }: ApiTesterProps) {
 
           {/* Success response */}
           {!loading && response && (
-            <div className="p-4 bg-green-50 border border-green-200 rounded-md">
+            <div className="rounded-md border border-green-200 bg-green-50 p-4">
               <div className="flex items-start">
-                <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 mr-2" />
+                <CheckCircle className="mt-0.5 mr-2 h-5 w-5 text-green-500" />
                 <div>
                   <h4 className="font-medium text-green-800">Success</h4>
-                  <pre className="text-sm text-green-700 mt-1 whitespace-pre-wrap overflow-auto max-h-40">
+                  <pre className="mt-1 max-h-40 overflow-auto whitespace-pre-wrap text-green-700 text-sm">
                     {JSON.stringify(response, null, 2)}
                   </pre>
                 </div>
@@ -156,13 +179,14 @@ export function ApiTester({ title, description, endpoint }: ApiTesterProps) {
 
           {/* Empty state */}
           {!loading && !error && !response && (
-            <div className="p-4 border border-dashed rounded-md flex items-center justify-center h-full">
-              <p className="text-gray-400 text-sm">Click any button above to test the endpoint</p>
+            <div className="flex h-full items-center justify-center rounded-md border border-dashed p-4">
+              <p className="text-gray-400 text-sm">
+                Click any button above to test the endpoint
+              </p>
             </div>
           )}
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
-

@@ -1,18 +1,23 @@
-import { NextResponse } from "next/server"
-import { shouldFail, getRandomError } from "@/lib/api-utils"
+import { getRandomError, shouldFail } from "@/lib/api-utils";
+import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   // Get URL to check for query parameters
-  const url = new URL(request.url)
-  const forceResult = url.searchParams.get("result")
+  const url = new URL(request.url);
+  const forceResult = url.searchParams.get("result");
 
   // Simulate processing delay (shortened)
-  await new Promise((resolve) => setTimeout(resolve, 100 + Math.random() * 200))
+  await new Promise((resolve) =>
+    setTimeout(resolve, 100 + Math.random() * 200),
+  );
 
   // Force success or failure based on query parameter
   if (forceResult === "failure") {
-    const error = getRandomError()
-    return NextResponse.json({ message: error.message }, { status: error.status })
+    const error = getRandomError();
+    return NextResponse.json(
+      { message: error.message },
+      { status: error.status },
+    );
   }
 
   // Force success
@@ -25,13 +30,16 @@ export async function GET(request: Request) {
         { id: 104, name: "Smartwatch", price: 249, inStock: true },
         { id: 105, name: "Tablet", price: 499, inStock: true },
       ],
-    })
+    });
   }
 
   // Random behavior (20% chance of failure)
   if (shouldFail()) {
-    const error = getRandomError()
-    return NextResponse.json({ message: error.message }, { status: error.status })
+    const error = getRandomError();
+    return NextResponse.json(
+      { message: error.message },
+      { status: error.status },
+    );
   }
 
   // Success response
@@ -43,6 +51,5 @@ export async function GET(request: Request) {
       { id: 104, name: "Smartwatch", price: 249, inStock: true },
       { id: 105, name: "Tablet", price: 499, inStock: true },
     ],
-  })
+  });
 }
-

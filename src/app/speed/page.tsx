@@ -1,34 +1,34 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft, Clock, Zap, AlertTriangle } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { AlertTriangle, ArrowLeft, Clock, Zap } from "lucide-react";
+import Link from "next/link";
 
 // This function simulates a delay on the server side
 async function getSpeedData() {
   // Generate a random delay between 100ms and 5000ms
-  const delay = Math.floor(Math.random() * 4900) + 100
+  const delay = Math.floor(Math.random() * 4900) + 100;
 
   // Wait for the delay
-  await new Promise((resolve) => setTimeout(resolve, delay))
+  await new Promise((resolve) => setTimeout(resolve, delay));
 
   // Categorize the speed
-  let category: "fast" | "medium" | "slow"
+  let category: "fast" | "medium" | "slow";
   if (delay < 1000) {
-    category = "fast"
+    category = "fast";
   } else if (delay < 3000) {
-    category = "medium"
+    category = "medium";
   } else {
-    category = "slow"
+    category = "slow";
   }
 
   return {
     delay,
     category,
     timestamp: new Date().toISOString(),
-  }
+  };
 }
 
 export default async function SpeedPage() {
-  const speedData = await getSpeedData()
+  const speedData = await getSpeedData();
 
   // Define UI elements based on the speed category
   const uiConfig = {
@@ -61,34 +61,43 @@ export default async function SpeedPage() {
       icon: <AlertTriangle className="h-5 w-5 text-red-700" />,
       title: "Slow Response",
       titleColor: "text-red-900",
-      description: "The server took too long to respond. This could indicate performance issues.",
+      description:
+        "The server took too long to respond. This could indicate performance issues.",
       cardBg: "bg-white",
       cardBorder: "border-red-200",
     },
-  }
+  };
 
-  const config = uiConfig[speedData.category]
+  const config = uiConfig[speedData.category];
 
   return (
-    <div className={`min-h-screen ${config.bgColor} flex flex-col items-center justify-center p-6`}>
+    <div
+      className={`min-h-screen ${config.bgColor} flex flex-col items-center justify-center p-6`}
+    >
       <div
-        className={`max-w-md w-full ${config.cardBg} rounded-lg shadow-sm border ${config.cardBorder} overflow-hidden`}
+        className={`w-full max-w-md ${config.cardBg} rounded-lg border shadow-sm ${config.cardBorder} overflow-hidden`}
       >
-        <div className={`${config.headerBg} p-4 border-b ${config.headerBorder}`}>
+        <div
+          className={`${config.headerBg} border-b p-4 ${config.headerBorder}`}
+        >
           <div className="flex items-center gap-2">
             {config.icon}
-            <h1 className={`text-lg font-medium ${config.titleColor}`}>{config.title}</h1>
+            <h1 className={`font-medium text-lg ${config.titleColor}`}>
+              {config.title}
+            </h1>
           </div>
         </div>
 
-        <div className="p-6 space-y-4">
+        <div className="space-y-4 p-6">
           <div className="space-y-2">
-            <h2 className="text-2xl font-bold">Response Time: {speedData.delay}ms</h2>
+            <h2 className="font-bold text-2xl">
+              Response Time: {speedData.delay}ms
+            </h2>
             <p className="text-gray-600">{config.description}</p>
           </div>
 
-          <div className="bg-gray-50 p-4 rounded-md border">
-            <pre className="text-sm text-gray-700 whitespace-pre-wrap">
+          <div className="rounded-md border bg-gray-50 p-4">
+            <pre className="whitespace-pre-wrap text-gray-700 text-sm">
               {JSON.stringify(
                 {
                   responseTime: `${speedData.delay}ms`,
@@ -101,7 +110,7 @@ export default async function SpeedPage() {
             </pre>
           </div>
 
-          <div className="pt-2 flex gap-2">
+          <div className="flex gap-2 pt-2">
             <Link href="/">
               <Button variant="outline" className="flex items-center gap-2">
                 <ArrowLeft className="h-4 w-4" />
@@ -118,6 +127,5 @@ export default async function SpeedPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-
