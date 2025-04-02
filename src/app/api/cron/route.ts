@@ -50,17 +50,25 @@ export async function GET() {
     },
   };
 
-  const pagePromises = PAGES.map((page) => makeRequest(page));
-  results.pages = await Promise.all(pagePromises);
+  const pageRequests: Promise<RequestResult>[] = [];
+  for (const page of PAGES) {
+    const count = Math.floor(Math.random() * 20) + 1;
+    for (let i = 0; i < count; i++) {
+      pageRequests.push(makeRequest(page));
+    }
+  }
 
-  const apiPromises = API_ENDPOINTS.map((endpoint) =>
-    makeRequest(endpoint, true),
-  );
+  const apiRequests: Promise<RequestResult>[] = [];
+  for (const endpoint of API_ENDPOINTS) {
+    const count = Math.floor(Math.random() * 20) + 1;
+    for (let i = 0; i < count; i++) {
+      apiRequests.push(makeRequest(endpoint, true));
+    }
+  }
 
-  // invoke all promises
-  results.apis = await Promise.all(apiPromises);
+  results.pages = await Promise.all(pageRequests);
+  results.apis = await Promise.all(apiRequests);
 
-  // calculate summary
   const allRequests = [...results.pages, ...results.apis];
   results.summary.total = allRequests.length;
   results.summary.successful = allRequests.filter((r) => r.success).length;
