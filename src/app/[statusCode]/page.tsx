@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button"
 import { ArrowLeft, Info } from "lucide-react"
 import { getStatusCodeInfo } from "@/lib/status-codes"
 
-export default function StatusCodePage({ params }: {
-  params: {
+export default async function StatusCodePage({ params }: {
+  params: Promise<{
     statusCode: string
-  }
+  }>
 }) {
-  const { statusCode } = params
+  const { statusCode } = (await params);
   const code = Number.parseInt(statusCode, 10)
 
   // Validate that the status code is a number
