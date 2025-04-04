@@ -3,6 +3,30 @@
     {
       "path": "/api/cron",
       "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/au",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/br",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/cn",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/de",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/uk",
+      "schedule": "* * * * *"
+    },
+    {
+      "path": "/api/cron/us",
+      "schedule": "* * * * *"
     }
   ]
 }
