@@ -2,15 +2,15 @@ import { NextResponse } from "next/server";
 
 import { generateTraffic } from "@/app/api/generate-traffic";
 
-export const preferredRegion = ["iad1", "sfo1"];
+export const preferredRegion = ["cdg1", "arn1"];
 export const runtime = "edge";
 
 export async function GET() {
-  console.log("Starting US Cron Job...");
+  console.log("Starting EU Cron Job...");
 
-  const results = await generateTraffic(Math.random() * 25);
+  const results = await generateTraffic(Math.random() * 15);
 
-  console.log("Finished US Cron Job");
+  console.log("Finished EU Cron Job");
 
   return NextResponse.json(results);
 }

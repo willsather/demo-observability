@@ -2,7 +2,8 @@ import { NextResponse } from "next/server";
 
 import { generateTraffic } from "@/app/api/generate-traffic";
 
-export const preferredRegion = ["lhr1"];
+export const preferredRegion = ["lhr1", "dub1"];
+export const runtime = "edge";
 
 export async function GET() {
   console.log("Starting UK Cron Job...");
