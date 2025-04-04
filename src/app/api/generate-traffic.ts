@@ -82,33 +82,33 @@ export async function generateTraffic(count: number) {
 
 function printResults(results: Results) {
   console.log("Traffic Simulation Summary:");
-  console.table({
-    timestamp: results.timestamp,
-    totalRequests: results.summary.total,
-    successful: results.summary.successful,
-    failed: results.summary.failed,
-    avgResponseTime: `${results.summary.avgResponseTime}ms`,
-  });
+  // console.table({
+  //   timestamp: results.timestamp,
+  //   totalRequests: results.summary.total,
+  //   successful: results.summary.successful,
+  //   failed: results.summary.failed,
+  //   avgResponseTime: `${results.summary.avgResponseTime}ms`,
+  // });
 
   console.log("Detailed Request Results:");
-  console.table([
-    ...results.pages.map((r) => ({
-      type: "Page",
-      url: r.url,
-      status: r.status,
-      success: r.success,
-      responseTime: `${r.timeMs}ms`,
-      error: r.error || "-",
-    })),
-    ...results.apis.map((r) => ({
-      type: "API",
-      url: r.url,
-      status: r.status,
-      success: r.success,
-      responseTime: `${r.timeMs}ms`,
-      error: r.error || "-",
-    })),
-  ]);
+  // console.table([
+  //   ...results.pages.map((r) => ({
+  //     type: "Page",
+  //     url: r.url,
+  //     status: r.status,
+  //     success: r.success,
+  //     responseTime: `${r.timeMs}ms`,
+  //     error: r.error || "-",
+  //   })),
+  //   ...results.apis.map((r) => ({
+  //     type: "API",
+  //     url: r.url,
+  //     status: r.status,
+  //     success: r.success,
+  //     responseTime: `${r.timeMs}ms`,
+  //     error: r.error || "-",
+  //   })),
+  // ]);
 }
 
 async function makeRequest(url: string, isApi = false): Promise<RequestResult> {
