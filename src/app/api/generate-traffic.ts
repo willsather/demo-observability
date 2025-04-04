@@ -145,10 +145,7 @@ async function makeRequest(url: string, isApi = false): Promise<RequestResult> {
       });
     }
 
-    // Get the base URL from the request or use a default
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "http://localhost:3000";
+    const baseUrl = "https://willsather-demo-observability.vercel.app";
 
     // Make the request
     const fullUrl = new URL(url, baseUrl).toString();
