@@ -4,19 +4,15 @@ import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
-// This function simulates a delay on the server side
 async function getSpeedData() {
-  // Generate a random delay between 100ms and 5000ms
-  const delay = Math.floor(Math.random() * 4900) + 100;
+  const delay = Math.floor(Math.random() * 3000) + 100;
 
-  // Wait for the delay
   await new Promise((resolve) => setTimeout(resolve, delay));
 
-  // Categorize the speed
   let category: "fast" | "medium" | "slow";
   if (delay < 1000) {
     category = "fast";
-  } else if (delay < 3000) {
+  } else if (delay < 2000) {
     category = "medium";
   } else {
     category = "slow";
@@ -32,7 +28,6 @@ async function getSpeedData() {
 export default async function SpeedPage() {
   const speedData = await getSpeedData();
 
-  // Define UI elements based on the speed category
   const uiConfig = {
     fast: {
       bgColor: "bg-green-50",
