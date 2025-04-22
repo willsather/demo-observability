@@ -1,6 +1,14 @@
 import { chromium } from "playwright";
 
-const PAGES = ["/", "/speed", "/200"];
+const PAGES = [
+  "/",
+  "/speed",
+  "/200",
+  "/api/cron/ap",
+  "/api/cron/eu",
+  "/api/cron/uk",
+  "/api/cron/us",
+];
 const BASE_URL = process.env.VERCEL_URL
   ? process.env.VERCEL_URL
   : "http://localhost:3000";
