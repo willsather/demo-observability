@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import { AlertTriangle, ArrowLeft, Clock, Zap } from "lucide-react";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 // This function simulates a delay on the server side
 async function getSpeedData() {
   // Generate a random delay between 100ms and 5000ms
