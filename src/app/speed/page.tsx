@@ -111,7 +111,7 @@ export default async function SpeedPage() {
             <Link href="/">
               <Button variant="outline" className="flex items-center gap-2">
                 <ArrowLeft className="h-4 w-4" />
-                Back to API Tester
+                Back to Demo API
               </Button>
             </Link>
             <Link href="/speed">
